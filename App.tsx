@@ -4,14 +4,18 @@ import { GrossNetTool } from "./components/GrossNetTool";
 type Theme = "light" | "dark";
 
 export default function App() {
-  const [theme, setTheme] = useState<Theme>("light");
+  const [theme, setTheme] = useState<Theme>(() =>
+    document.documentElement.classList.contains("dark") ? "dark" : "light"
+  );
 
-  // Sync <html> dark class when theme updates
+  // Keep <html> dark class in sync with state (in case messages change it)
   useEffect(() => {
     const root = document.documentElement;
-    theme === "dark"
-      ? root.classList.add("dark")
-      : root.classList.remove("dark");
+    if (theme === "dark") {
+      root.classList.add("dark");
+    } else {
+      root.classList.remove("dark");
+    }
   }, [theme]);
 
   // Listen for parent window postMessage
@@ -38,3 +42,4 @@ export default function App() {
     </div>
   );
 }
+
