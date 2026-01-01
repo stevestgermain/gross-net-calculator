@@ -11,7 +11,7 @@
       rel="stylesheet"
     />
 
-    <!-- Instant Dark-Mode Sync (no flash) -->
+    <!-- Instant Dark-Mode Sync (no flash, with prefers-color-scheme fallback) -->
     <script>
       (function () {
         function applyTheme(theme) {
@@ -19,6 +19,23 @@
             document.documentElement.classList.add("dark");
           } else {
             document.documentElement.classList.remove("dark");
+          }
+        }
+
+        // Fallback: respect OS / browser dark mode on first paint
+        function detectInitialTheme() {
+          try {
+            if (
+              window.matchMedia &&
+              window.matchMedia("(prefers-color-scheme: dark)").matches
+            ) {
+              applyTheme("dark");
+            } else {
+              applyTheme("light");
+            }
+          } catch (e) {
+            // safest default is light
+            applyTheme("light");
           }
         }
 
@@ -32,9 +49,13 @@
           }
         }
 
+        // 1) Set a sensible initial theme based on system setting
+        detectInitialTheme();
+
+        // 2) Listen for parent messages to override / stay in sync
         window.addEventListener("message", handleMessage, false);
 
-        // Ask parent for theme ASAP
+        // 3) Ask parent for its current theme ASAP (if it responds)
         try {
           if (window.parent && window.parent !== window) {
             window.parent.postMessage({ type: "REQUEST_THEME" }, "*");
