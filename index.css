@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Ensure background fully switches */
+/* Ensure dark mode background fills iframe */
 html.dark body {
   background-color: #050706;
 }
