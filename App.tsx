@@ -31,7 +31,7 @@ export default function App() {
   }, []);
 
   return (
-    <div className="min-h-screen font-sans flex justify-center items-start pt-6 pb-12 px-4 bg-gray-50 text-gray-900 dark:bg-[#050706] dark:text-white">
+    <div className="min-h-screen font-sans flex justify-center items-start pt-6 pb-12 px-4 bg-white text-gray-900 dark:bg-[#050706] dark:text-white">
       <div className="w-full max-w-[460px] mx-auto">
         <GrossNetTool />
       </div>
