@@ -1,0 +1,8 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Ensure background fully switches */
+html.dark body {
+  background-color: #050706;
+}
